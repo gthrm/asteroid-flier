@@ -1,0 +1,12 @@
+body {
+  background: black;
+  display: grid;
+  align-items: center;
+  justify-content: space-around;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+canvas {
+  border: 1px solid white;
+}
