@@ -1,3 +1,6 @@
+import kontra from "kontra";
+import './style.css'
+
 const {
   init,
   Sprite,
@@ -6,7 +9,7 @@ const {
   keyPressed,
   degToRad,
   collides,
-  Text
+  Text,
 } = kontra;
 
 const { canvas } = init();
