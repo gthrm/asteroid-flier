@@ -1,0 +1,1 @@
+export {printText} from './utils';
