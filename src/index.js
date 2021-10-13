@@ -9,8 +9,12 @@ import {
 } from 'kontra';
 import {printText} from './font';
 import './style.css';
+const MAX_CANVAS_SIZE = 900;
 
 const {canvas} = init();
+
+canvas.height = window.innerHeight > MAX_CANVAS_SIZE ? MAX_CANVAS_SIZE : window.innerHeight;
+canvas.width = window.innerWidth > MAX_CANVAS_SIZE ? MAX_CANVAS_SIZE : window.innerWidth;
 
 initKeys();
 
