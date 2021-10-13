@@ -9,7 +9,12 @@ import {
 } from 'kontra';
 import {printText} from './font';
 import './style.css';
+import {collidesWithRotation} from './utils';
+
 const MAX_CANVAS_SIZE = 900;
+const ASTEROID_QUANTITY = 5;
+const ASTEROID_SIZE = 8;
+const ASTEROID_LIVES = 3;
 
 const {canvas} = init();
 
@@ -20,16 +25,18 @@ initKeys();
 
 const sprites = [];
 let scores = 0;
+let lives = 3;
+
 const scoresText = Sprite({
 	dt: 0,
 	x: 30,
 	y: 20,
 	render() {
-		printText(this.context, this.text, 8);
+		printText(this.context, this.text, 4);
 	},
 	update() {
 		if (this.text !== `${scores}`) {
-			this.text = `${scores}`;
+			this.text = `Score ${scores}  Lives ${lives}`;
 		}
 	},
 });
@@ -38,7 +45,8 @@ const ship = Sprite({
 	dt: 0,
 	x: canvas.width / 4,
 	y: canvas.height / 4,
-	radius: 6, // We'll use this later for collision detection
+	type: 'ship',
+	radius: 6,
 	render() {
 		// Draw a right-facing triangle
 		this.context.strokeStyle = 'rgb(10, 216, 37)';
@@ -57,8 +65,8 @@ const ship = Sprite({
 sprites.push(ship);
 
 function createAsteroid(
-	size = 30,
-	isChild = false,
+	size = ASTEROID_SIZE,
+	live = ASTEROID_LIVES,
 	x = canvas.width / 2,
 	y = canvas.height / 2,
 ) {
@@ -68,12 +76,13 @@ function createAsteroid(
 		y,
 		dx: (Math.random() * 4) - 2,
 		dy: (Math.random() * 4) - 2,
-		width: size * 1.333,
-		height: size * 1.333,
-		radius: size,
-		anchor: {x: 0.5, y: 0.5},
-		isChild,
+		width: size * live * 1.333,
+		height: size * live * 1.333,
+		radius: size * live,
+		live,
 		render() {
+			// this.context.fillStyle = 'red';
+			// this.context.fillRect(0, 0, this.width, this.height);
 			this.context.strokeStyle = 'white';
 			this.context.beginPath(); // Start drawing a shape
 			this.context.arc(
@@ -85,22 +94,34 @@ function createAsteroid(
 			);
 			this.context.stroke(); // Outline the circle
 		},
+		destroy() {
+			this.live--;
+			if (this.live) {
+				Array(4)
+					.fill(true)
+					.forEach(() => createAsteroid(size, this.live, this.x, this.y));
+			}
+
+			this.ttl = 0;
+		},
 		checkCollision(entity) {
 			if (
 				entity.type === 'bullet'
         && entity.isAlive()
         && collides(this, entity)
 			) {
-				console.log('collides');
-				if (!this.isChild) {
-					Array(4)
-						.fill(true)
-						.forEach(() => createAsteroid(size / 2, true, this.x, this.y));
-				}
-
-				this.ttl = 0;
-				entity.ttl = 0;
+				this.destroy();
+				entity.destroy();
 				scores += 1;
+			}
+
+			if (entity.type === 'ship' && collidesWithRotation(this, entity)) {
+				this.destroy();
+				this.dx = -this.dx;
+				this.dy = -this.dy;
+				entity.dx = -entity.dx;
+				entity.dy = -entity.dy;
+				lives--;
 			}
 		},
 	});
@@ -124,6 +145,9 @@ function createBullet(cos, sin) {
 		radius: 2,
 		width: 2,
 		height: 2,
+		destroy() {
+			this.ttl = 0;
+		},
 	});
 }
 
@@ -168,7 +192,7 @@ function usePlayerKeys() {
 	}
 }
 
-for (let i = 0; i < 1; i++) {
+for (let i = 0; i < ASTEROID_QUANTITY; i++) {
 	createAsteroid();
 }
 

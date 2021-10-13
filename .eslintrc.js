@@ -12,5 +12,6 @@ module.exports = {
 	},
 	rules: {
 		'new-cap': 0,
+		'capitalized-comments': 0,
 	},
 };
