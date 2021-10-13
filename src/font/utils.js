@@ -1,5 +1,6 @@
 import {letters} from './letters';
 
+// https://github.com/PaulBGD/PixelFont
 export function printText(context, string = '', size = 10, color = 'rgb(10, 216, 37)') {
 	const needed = [];
 	string = string.toUpperCase(); // Because I only did uppercase letters
