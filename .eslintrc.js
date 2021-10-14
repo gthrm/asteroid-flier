@@ -3,9 +3,7 @@ module.exports = {
 		browser: true,
 		es2021: true,
 	},
-	extends: [
-		'xo',
-	],
+	extends: ['xo'],
 	parserOptions: {
 		ecmaVersion: 12,
 		sourceType: 'module',
