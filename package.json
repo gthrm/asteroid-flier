@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "asteroid-flier",
   "main": "main.js",
+  "homepage": "https://gthrm.github.io/asteroid-flier/",
   "scripts": {
     "build": "webpack --config webpack/prod.js ",
     "start": "webpack serve --config webpack/base.js --open"

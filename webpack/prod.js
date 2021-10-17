@@ -6,8 +6,9 @@ const path = require('path');
 module.exports = merge(base, {
 	mode: 'production',
 	output: {
-		filename: 'bundle.min.js',
+		filename: '[name].[contenthash].js',
 		path: path.join(__dirname, '../dist'),
+		publicPath: '/asteroid-flier/',
 	},
 	devtool: false,
 	performance: {
