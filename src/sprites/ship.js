@@ -1,12 +1,12 @@
 import {Sprite} from 'kontra';
 import {checkGlobalCollision, checkPhysics, usePlayerKeys} from '../utils';
-import {store} from '../store';
+import {state} from '../state';
 
 export function createShip() {
 	return Sprite({
 		dt: 0,
-		x: store.canvas.width / 4,
-		y: store.canvas.height / 4,
+		x: state.canvas.width / 4,
+		y: state.canvas.height / 4,
 		type: 'ship',
 		radius: 6,
 		render() {
@@ -24,13 +24,13 @@ export function createShip() {
 		update() {
 			this.dt += 1 / 60;
 
-			checkPhysics(this, store.canvas);
-			checkGlobalCollision(this, store.sprites);
+			checkPhysics(this, state.canvas);
+			checkGlobalCollision(this, state.sprites);
 			usePlayerKeys(this);
 			this.advance();
 
 			// Set a max speed
-			if (this.velocity.length() > 5) {
+			if (this.velocity.length() > 3) {
 				this.dx *= 0.95;
 				this.dy *= 0.95;
 			}

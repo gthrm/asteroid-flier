@@ -2,14 +2,14 @@
 import {collides, Sprite} from 'kontra';
 const ASTEROID_SIZE = 8;
 const ASTEROID_LIVES = 3;
-import {store} from '../store';
+import {state} from '../state';
 import {checkGlobalCollision, checkPhysics, collidesWithRotation} from '../utils';
 
 export function createAsteroid(
 	size = ASTEROID_SIZE,
 	live = ASTEROID_LIVES,
-	x = store.canvas.width / 2,
-	y = store.canvas.height / 2,
+	x = state.canvas.width / 2,
+	y = state.canvas.height / 2,
 ) {
 	return Sprite({
 		type: 'asteroid', // We'll use this for collision detection
@@ -44,7 +44,7 @@ export function createAsteroid(
 					.fill(true)
 					.forEach(() => {
 						const asteroid = createAsteroid(size, this.live, this.x, this.y);
-						store.sprites.push(asteroid);
+						state.sprites.push(asteroid);
 					});
 			}
 
@@ -58,7 +58,7 @@ export function createAsteroid(
 			) {
 				this.destroy();
 				entity.destroy();
-				store.scores += 1;
+				state.scores += 1;
 			}
 
 			if (entity.type === 'ship' && collidesWithRotation(this, entity)) {
@@ -67,14 +67,14 @@ export function createAsteroid(
 				this.dy = -(this.dy + entity.dy);
 				entity.dx = -(entity.dx + this.dx);
 				entity.dy = -(entity.dy + this.dy);
-				store.lives--;
+				state.lives--;
 			}
 		},
 		update() {
 			if (this.isAlive()) {
 				this.advance();
-				checkPhysics(this, store.canvas);
-				checkGlobalCollision(this, store.sprites);
+				checkPhysics(this, state.canvas);
+				checkGlobalCollision(this, state.sprites);
 			}
 		},
 	});

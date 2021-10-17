@@ -1,6 +1,6 @@
 import {Sprite} from 'kontra';
 import {printText} from '../font';
-import {store} from '../store';
+import {state} from '../state';
 
 export function createScoresText() {
 	return Sprite({
@@ -11,8 +11,8 @@ export function createScoresText() {
 			printText(this.context, this.text, 4);
 		},
 		update() {
-			if (this.text !== `${store.scores}`) {
-				this.text = `Score ${store.scores}  Lives ${store.lives}`;
+			if (this.text !== `${state.scores}`) {
+				this.text = `Score ${state.scores}  Lives ${state.lives}`;
 			}
 		},
 	});

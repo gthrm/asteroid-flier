@@ -9,8 +9,8 @@ export function createBullet(sprite, cos, sin) {
 		x: sprite.x + (cos * 12),
 		y: sprite.y + (sin * 12),
 		// Move the bullet slightly faster than the ship
-		dx: sprite.dx + (cos * 5),
-		dy: sprite.dy + (sin * 5),
+		dx: sprite.dx + (cos * 10),
+		dy: sprite.dy + (sin * 10),
 		// Live only 60 frames
 		ttl: 60,
 		// Bullets are small

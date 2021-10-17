@@ -3,7 +3,7 @@ import {
 	degToRad,
 } from 'kontra';
 import {createBullet} from '../sprites/bullet';
-import {store} from '../store';
+import {state} from '../state';
 
 // https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection#axis-aligned_bounding_box
 export function collidesWithRotation(sprite, sprite2) {
@@ -75,6 +75,6 @@ export function usePlayerKeys(sprite) {
 		console.log('shooting');
 		sprite.dt = 0;
 		const bullet = createBullet(sprite, cos, sin);
-		store.sprites.push(bullet);
+		state.sprites.push(bullet);
 	}
 }
