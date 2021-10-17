@@ -1,0 +1,25 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  width: 100vw;
+}
+
+body {
+  background: black;
+  display: grid;
+  align-items: center;
+  justify-content: space-around;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+canvas {
+  margin: 10px 0;
+  border: 1px solid white;
+}
+
