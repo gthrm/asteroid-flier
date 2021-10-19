@@ -4,4 +4,4 @@
 
 [Demo](https://gthrm.github.io/asteroid-flier/)
 
-![](./game.gif)
+![GIF Game](./game.gif)
